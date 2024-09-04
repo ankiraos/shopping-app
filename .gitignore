@@ -13,3 +13,5 @@ db.sqlite3
 # Ignore media files
 media/
 staticfiles/
+
+shopping_app/trial

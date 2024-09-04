@@ -1,4 +1,6 @@
 # Application definition
+from .secret import *
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",

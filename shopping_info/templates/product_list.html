@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+<h2>Product List</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{product.product_name }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.stock }}</td>
+            {% if request.user.is_staff %}
+                <td><button type="submit" class="btn btn-danger"><a href="/delproduct/{{product.id}}">Delete</a></button></td>
+            {% else %}
+                <td><button type="submit" class="btn btn-success"><a href="/add_order/{{product.id}}">Buy Now</a></button></td>
+                <td><a href="/addcart_plist/{{product.id}}"><button type="submit" class="btn btn-success">Add Cart</button></a></td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

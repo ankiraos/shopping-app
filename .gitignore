@@ -1,0 +1,15 @@
+env/
+shopping_app/secret.py
+
+
+shopping_info/__pycache__/
+shopping_info/__pycache__/
+
+static/
+
+# Database files
+db.sqlite3
+
+# Ignore media files
+media/
+staticfiles/

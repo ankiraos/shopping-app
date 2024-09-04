@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart List{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if carts or request.user.is_staff %}
+        {% if request.user.is_staff and carts|length == 0 %}
+            <div class="text-center">
+                <h2>Cart List</h2>
+                <img src="https://static.vecteezy.com/system/resources/previews/016/462/240/non_2x/empty-shopping-cart-illustration-concept-on-white-background-vector.jpg" 
+                     alt="Empty Cart" 
+                     class="img-fluid" 
+                     style="max-height: 500px;">
+            </div>
+        {% else %}
+            <h2>Cart List</h2>
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cart in carts %}
+                    <tr>
+                        <td>{{ cart.user.username }}</td>
+                        <td>{{ cart.product.product_name }}</td>
+                        <td>{{ cart.product.brand }}</td>
+                        <td>{{ cart.quantity }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'delcart' cart.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% else %}
+        <div class="text-center mt-5">
+            <h3 class="mb-4">Your cart is empty</h3>
+            <img src="https://m.media-amazon.com/images/G/31/cart/empty/kettle-desaturated._CB424694257_.svg" 
+                 alt="Empty Cart" 
+                 class="img-fluid"
+                 style="max-height: 500px;">
+        </div>
+        <div class="text-center">
+            <a class="btn btn-primary btn-lg mt-3" href="{% url 'product_list' %}">Add to Cart</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

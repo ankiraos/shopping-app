@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}User List{% endblock %}
+
+{% block content %}
+{% if has_orders %}
+    <h2> Users with Orders </h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <a href="{% url 'orders-list' user.id %}" style="color: black;">{{ user.username }}</a> 
+                    </td>
+                    <td>{{ user.phone_no }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.address }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="text-center">
+        <h2>No Orders</h2>
+        <img src="https://cdni.iconscout.com/illustration/premium/thumb/man-receiving-canceled-orders-back-illustration-download-in-svg-png-gif-file-formats--damaged-parcel-product-delivery-online-pack-illustrations-3718471.png" alt="No Orders" class="img-fluid" style="max-height: 700px;">
+    </div>
+{% endif %}
+{% endblock %}

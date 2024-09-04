@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+{% if orders or request.user.is_staff %}
+    {% if request.user.is_staff and orders|length == 0 %}
+    <div class="text-center">
+            <h2>No any orders</h2>
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/man-receiving-canceled-orders-back-illustration-download-in-svg-png-gif-file-formats--damaged-parcel-product-delivery-online-pack-illustrations-3718471.png" alt="No Orders"  class="img-fluid" 
+            style="max-height: 700px;">
+    </div>
+    {% else %}
+        <h2>Order List</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Product</th>
+                    <th>Name</th>
+                    <th>Order Date</th>
+                    <th>Quantity</th>
+                    <th>Delivery Date</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.user.username }}</td>
+                    <td>{{ order.product.product_name }}</td>
+                    <td>{{ order.product.brand }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>{{ order.delivery_date }}</td>
+                    <td>{{ order.address }}</td>
+                    <td><button type="submit" class="btn btn-danger"><a href="/del_order/{{order.id}}">cancel</a></button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% else %}
+    <div class="text-center mt-5">
+        <h3 class="mb-4">No Orders Found</h3>
+        <img src="https://img.freepik.com/free-vector/man-with-shopping-car-document-with-coins_24877-53516.jpg?semt=ais_hybrid" class="img-fluid mb-4" alt="No Orders">
+        <div>
+            <a href="/products-list" class="btn btn-primary btn-lg">Place an Order</a>
+        </div>
+        <!-- <img src="https://s38924.pcdn.co/wp-content/uploads/2020/05/Order-Form.png" class="img-fluid mt-4" alt="Order Form"> -->
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

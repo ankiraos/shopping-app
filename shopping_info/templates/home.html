@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="jumbotron text-center">
+        <img src="https://img.freepik.com/free-vector/ecommerce-web-page-concept-illustration_114360-8204.jpg" alt="Online Shopping Image" class="img-fluid" style="max-height: 300px;">
+        <h1 class="display-4 mt-3">Welcome to My Shop!</h1>
+        <p class="lead">This is a simple e-commerce website.</p>
+    </div>
+    
+    {% if request.user.is_authenticated %}
+    <div class="row">
+        <!-- Limiting to the first 5 products -->
+        {% for product in products|slice:":5" %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.product_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ product.brand }}</h6>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+                    <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
+                    
+                    {% if request.user.is_staff %}
+                        <a href="/delproduct/{{product.id}}" class="btn btn-danger">Delete</a>
+                    {% else %}
+                        <a href="/add_order/{{product.id}}" class="btn btn-success">Buy Now</a>
+                        <a href="/addcart_plist/{{product.id}}" class="btn btn-primary">Add to Cart</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="/products-list" class="btn btn-success">See More Products</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

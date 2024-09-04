@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}User List{% endblock %}
+
+{% block content %}
+{% if has_carts %}
+<h2>Users of add cart </h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+               <td>
+                  <a href="{% url 'carts_list' user.id %}"  style="color: black;">{{ user.username }}</a> 
+               </td>
+               <td>{{ user.phone_no }}</td>
+               <td>{{ user.email }}</td>
+               <td>{{ user.address }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    {% else %}
+    <div class="text-center">
+        <h2>Cart List</h2>
+        <img src="https://static.vecteezy.com/system/resources/previews/016/462/240/non_2x/empty-shopping-cart-illustration-concept-on-white-background-vector.jpg" 
+             alt="Empty Cart" 
+             class="img-fluid" 
+             style="max-height: 500px;">
+    </div>
+    {% endif %}
+</table>
+{% endblock %}

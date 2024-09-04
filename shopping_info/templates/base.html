@@ -50,11 +50,11 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'add_product' %}">Add Product</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'users_of_order_list' %}">Orders</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'users_of_cart_list' %}">Cart</a></li>
-                        {% endif %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'users_of_shop' %}">Users</a></li>
+                            {% endif %}
                         {% if request.user %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'user_list' %}">User</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user_list' %}">Profile</a></li>
                         {% endif %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
                     {% endif %}
                 </ul>
             </div>

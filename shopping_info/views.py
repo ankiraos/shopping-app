@@ -50,10 +50,10 @@ def login_view(request):
 
 @login_required
 def logout_view(request):
-    if request.method == "POST":
-        logout(request)
-        return redirect("login")
-    return render(request, "logout.html")
+    # if request.method == "POST":
+    logout(request)
+    return redirect("login")
+    # return render(request, "logout.html")
 
 
 @login_required
@@ -61,6 +61,21 @@ def user_list(request):
     user = request.user
     users = UserDetail.objects.filter(username=user)
     return render(request, "user_list.html", {"users": users})
+
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import render
+from .models import UserDetail
+
+
+@login_required
+def users_of_shop_list(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You do not have permission to access this page.")
+    users = UserDetail.objects.exclude(id=request.user.id)
+
+    return render(request, "users_of_shop.html", {"users": users})
 
 
 def delete_user(request):
